@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "extraoverlay",
+  "version": "${version}",
+  "name": "extraOverlay",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/extraoverlay/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "org.moss.extraoverlay.client.ExtraoverlayClient"
+    ],
+    "main": [
+      "org.moss.extraoverlay.Extraoverlay"
+    ]
+  },
+  "mixins": [
+    "extraoverlay.mixins.json",
+    {
+      "config": "extraoverlay.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}

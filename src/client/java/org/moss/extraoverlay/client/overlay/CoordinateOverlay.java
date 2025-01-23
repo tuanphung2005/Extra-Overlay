@@ -4,19 +4,33 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.MinecraftClient;
 
-public class CoordinateOverlay {
+public class CoordinateOverlay implements IOverlay {
     private static int x = 5;
     private static int y = 5;
 
-    public static int getX() { return x; }
-    public static int getY() { return y; }
-    
-    public static void setPosition(int newX, int newY) {
+    @Override
+    public String getName() {
+        return "Coordinates";
+    }
+
+    @Override
+    public int getX() {
+        return x;
+    }
+
+    @Override
+    public int getY() {
+        return y;
+    }
+
+    @Override
+    public void setPosition(int newX, int newY) {
         x = newX;
         y = newY;
     }
 
-    public static void render(DrawContext context, MinecraftClient client) {
+    @Override
+    public void render(DrawContext context, MinecraftClient client) {
         if (client.player == null) return;
 
         String[] coordinates = {
@@ -28,7 +42,8 @@ public class CoordinateOverlay {
         renderCoordinates(context, client.textRenderer, coordinates, x, y);
     }
 
-    public static void renderPreview(DrawContext context, TextRenderer textRenderer, int previewX, int previewY) {
+    @Override
+    public void renderPreview(DrawContext context, TextRenderer textRenderer, int previewX, int previewY) {
         String[] coordinates = {
             "X: 123.45",
             "Y: 69.420",

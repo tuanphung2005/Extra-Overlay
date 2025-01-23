@@ -15,3 +15,5 @@ why extra? i dont know.
 - armor
 - potion effect
 - target's info (calculate win%)
+- ammo (arrows, snowballs, etc)
+- config save/load

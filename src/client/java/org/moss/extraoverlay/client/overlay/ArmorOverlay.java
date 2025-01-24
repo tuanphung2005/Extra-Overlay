@@ -7,6 +7,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.Items;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ArmorOverlay implements IOverlay {
     private static int x = 5;
     private static int y = 80;
@@ -43,20 +46,26 @@ public class ArmorOverlay implements IOverlay {
         
         ItemStack[] armor = {helmet, chestplate, leggings, boots};
         
-        boolean hasArmor = false;
-        for (ItemStack item : armor) {
-            if (!item.isEmpty()) {
-                hasArmor = true;
-                break;
+        // Only create arrays for equipped pieces
+        List<ItemStack> equippedArmor = new ArrayList<>();
+        List<String> durabilities = new ArrayList<>();
+        
+        for (ItemStack piece : armor) {
+            if (!piece.isEmpty()) {
+                equippedArmor.add(piece);
+                durabilities.add(String.format("%d%%", getArmorDurability(piece)));
             }
         }
         
-        if (hasArmor) {
-            String[] durabilities = new String[4];
-            for (int i = 0; i < armor.length; i++) {
-                durabilities[i] = String.format("%d%%", getArmorDurability(armor[i]));
-            }
-            renderArmorStatus(context, client.textRenderer, armor, durabilities, x, y);
+        if (!equippedArmor.isEmpty()) {
+            renderArmorStatus(
+                context, 
+                client.textRenderer, 
+                equippedArmor.toArray(new ItemStack[0]),
+                durabilities.toArray(new String[0]),
+                x, 
+                y
+            );
         }
     }
 
@@ -80,37 +89,20 @@ public class ArmorOverlay implements IOverlay {
 
     private static void renderArmorStatus(DrawContext context, TextRenderer textRenderer, ItemStack[] items, String[] durabilities, int posX, int posY) {
         int lineHeight = 20;
-        int maxWidth = 0;
         
-        for (String text : durabilities) {
-            maxWidth = Math.max(maxWidth, textRenderer.getWidth(text));
-        }
-        maxWidth += 24;
-
-        // background
-        context.fill(
-            posX - 2,
-            posY - 2,
-            posX + maxWidth,
-            posY + (items.length * lineHeight),
-            0x80000000
-        );
-
         for (int i = 0; i < items.length; i++) {
-            if (!items[i].isEmpty()) {
-                // item
-                context.drawItem(items[i], posX, posY + (i * lineHeight));
-                
-                // durability text
-                int color = getColorForDurability(durabilities[i]);
-                context.drawTextWithShadow(
-                    textRenderer,
-                    durabilities[i],
-                    posX + 20,
-                    posY + (i * lineHeight) + 5,
-                    color
-                );
-            }
+            // Draw item
+            context.drawItem(items[i], posX, posY + (i * lineHeight));
+            
+            // Draw durability text with shadow (for better visibility without background)
+            int color = getColorForDurability(durabilities[i]);
+            context.drawTextWithShadow(
+                textRenderer,
+                durabilities[i],
+                posX + 20,
+                posY + (i * lineHeight) + 5,
+                color
+            );
         }
     }
 

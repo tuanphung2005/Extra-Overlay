@@ -4,7 +4,7 @@ why extra? i dont know.
 
 ## Features
 - coordinate overlay.
-- limited customization (cuz im the only one using it LOL)
+- (really) limited customization (cuz im the only one using it LOL)
 
 ## Installation
 1. clone this repo

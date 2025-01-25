@@ -74,6 +74,7 @@ public class OverlaySettingsScreen extends Screen {
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        // Draw a semi-transparent dark background
         context.fill(0, 0, this.width, this.height, 0x88000000);
 
         // Instructions
@@ -81,10 +82,17 @@ public class OverlaySettingsScreen extends Screen {
             "Click and drag overlays to reposition them", 
             10, 10, 0xFFFFFF, true);
 
+        // Only render preview overlays
         for (IOverlay overlay : OverlayManager.getOverlays()) {
+            // Only render preview, main overlays will be hidden while in settings
             overlay.renderPreview(context, client.textRenderer, overlay.getX(), overlay.getY());
         }
 
         super.render(context, mouseX, mouseY, delta);
+    }
+
+    @Override
+    public boolean shouldPause() {
+        return false;
     }
 }

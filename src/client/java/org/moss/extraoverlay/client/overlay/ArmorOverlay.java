@@ -13,6 +13,17 @@ import java.util.List;
 public class ArmorOverlay implements IOverlay {
     private static int x = 5;
     private static int y = 80;
+    private boolean selected = false;
+
+    @Override
+    public boolean isSelected() {
+        return selected;
+    }
+
+    @Override
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
 
     @Override
     public String getName() {
@@ -36,6 +47,16 @@ public class ArmorOverlay implements IOverlay {
     }
 
     @Override
+    public int getWidth() {
+        return 16;
+    }
+
+    @Override
+    public int getHeight() {
+        return 16 * 4;
+    }
+
+    @Override
     public void render(DrawContext context, MinecraftClient client) {
         if (client.player == null) return;
 
@@ -46,7 +67,6 @@ public class ArmorOverlay implements IOverlay {
         
         ItemStack[] armor = {helmet, chestplate, leggings, boots};
         
-        // Only create arrays for equipped pieces
         List<ItemStack> equippedArmor = new ArrayList<>();
         List<String> durabilities = new ArrayList<>();
         
@@ -94,7 +114,7 @@ public class ArmorOverlay implements IOverlay {
             // Draw item
             context.drawItem(items[i], posX, posY + (i * lineHeight));
             
-            // Draw durability text with shadow (for better visibility without background)
+            // Draw durability
             int color = getColorForDurability(durabilities[i]);
             context.drawTextWithShadow(
                 textRenderer,

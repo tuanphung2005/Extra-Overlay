@@ -8,7 +8,15 @@ public interface IOverlay {
     String getName();
     int getX();
     int getY();
+
     void setPosition(int x, int y);
     void render(DrawContext context, MinecraftClient client);
     void renderPreview(DrawContext context, TextRenderer textRenderer, int previewX, int previewY);
+
+    boolean isSelected();
+    void setSelected(boolean selected);
+
+    int getWidth();
+    int getHeight();
+
 }

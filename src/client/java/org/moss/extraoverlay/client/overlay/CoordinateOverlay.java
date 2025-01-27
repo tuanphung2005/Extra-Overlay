@@ -7,6 +7,7 @@ import net.minecraft.client.MinecraftClient;
 public class CoordinateOverlay implements IOverlay {
     private static int x = 5;
     private static int y = 5;
+    private boolean selected = false;
 
     @Override
     public String getName() {
@@ -44,13 +45,50 @@ public class CoordinateOverlay implements IOverlay {
 
     @Override
     public void renderPreview(DrawContext context, TextRenderer textRenderer, int previewX, int previewY) {
+        MinecraftClient client = MinecraftClient.getInstance();
+        if (client.player == null) return;
+    
         String[] coordinates = {
-            "X: 123.45",
-            "Y: 69.420",
-            "Z: -420.69"
+            String.format("X: %.2f", client.player.getX()),
+            String.format("Y: %.2f", client.player.getY()),
+            String.format("Z: %.2f", client.player.getZ())
         };
-
+    
         renderCoordinates(context, textRenderer, coordinates, previewX, previewY);
+    }
+
+    @Override
+    public boolean isSelected() {
+        return selected;
+    }
+
+    @Override
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    @Override
+    public int getWidth() {
+        MinecraftClient client = MinecraftClient.getInstance();
+        TextRenderer textRenderer = client.textRenderer;
+        
+        String[] coords = new String[] {
+            "X: " + (int)client.player.getX(),
+            "Y: " + (int)client.player.getY(), 
+            "Z: " + (int)client.player.getZ()
+        };
+        
+        int maxWidth = 0;
+        for (String coord : coords) {
+            maxWidth = Math.max(maxWidth, textRenderer.getWidth(coord));
+        }
+        
+        return maxWidth + 16;
+    }
+
+    @Override 
+    public int getHeight() {
+        return MinecraftClient.getInstance().textRenderer.fontHeight * 3 + 5;
     }
 
     private static void renderCoordinates(DrawContext context, TextRenderer textRenderer, String[] coordinates, int posX, int posY) {

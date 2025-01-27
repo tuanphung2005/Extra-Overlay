@@ -33,13 +33,19 @@ public class OverlaySettingsScreen extends Screen {
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        // Deselect
+        for (IOverlay overlay : OverlayManager.getOverlays()) {
+            overlay.setSelected(false);
+        }
 
+        // new selection
         for (IOverlay overlay : OverlayManager.getOverlays()) {
             if (isMouseOver(mouseX, mouseY, overlay)) {
                 isDragging = true;
                 draggingOverlay = overlay;
                 dragOffsetX = (int)mouseX - overlay.getX();
                 dragOffsetY = (int)mouseY - overlay.getY();
+                overlay.setSelected(true);
                 return true;
             }
         }
@@ -74,18 +80,32 @@ public class OverlaySettingsScreen extends Screen {
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        // Draw a semi-transparent dark background
+
         context.fill(0, 0, this.width, this.height, 0x88000000);
 
-        // Instructions
         context.drawText(client.textRenderer, 
             "Click and drag overlays to reposition them", 
             10, 10, 0xFFFFFF, true);
 
-        // Only render preview overlays
         for (IOverlay overlay : OverlayManager.getOverlays()) {
-            // Only render preview, main overlays will be hidden while in settings
             overlay.renderPreview(context, client.textRenderer, overlay.getX(), overlay.getY());
+        }
+
+        // overlays
+        for (IOverlay overlay : OverlayManager.getOverlays()) {
+            if (overlay.isSelected()) {
+                int x = overlay.getX();
+                int y = overlay.getY();
+                int w = overlay.getWidth();
+                int h = overlay.getHeight();
+                
+                // border
+                context.fill(x - 1, y - 1, x + w + 1, y, 0xFFFFFFFF); // Top
+                context.fill(x - 1, y, x, y + h, 0xFFFFFFFF); // Left
+                context.fill(x + w, y, x + w + 1, y + h, 0xFFFFFFFF); // Right
+                context.fill(x - 1, y + h, x + w + 1, y + h + 1, 0xFFFFFFFF); // Bottom
+            }
+            
         }
 
         super.render(context, mouseX, mouseY, delta);

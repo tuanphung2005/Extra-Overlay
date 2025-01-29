@@ -51,20 +51,18 @@ public class ArmorOverlay implements IOverlay {
         MinecraftClient client = MinecraftClient.getInstance();
         TextRenderer textRenderer = client.textRenderer;
         
-        // Account for both item icon (16px) and text width
         int iconWidth = 16;
         int spacing = 4;
         
-        // Get max text width
-        int maxTextWidth = textRenderer.getWidth("100%"); // Max possible text width
+        int maxTextWidth = textRenderer.getWidth("100%");
         
         return iconWidth + spacing + maxTextWidth;
     }
 
     @Override
     public int getHeight() {
-        int lineHeight = 20; // Same as used in renderArmorStatus
-        return lineHeight * 4; // 4 armor pieces
+        int lineHeight = 20;
+        return lineHeight * 4;
     }
 
     @Override

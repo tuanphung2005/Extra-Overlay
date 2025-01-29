@@ -55,9 +55,11 @@ public class OverlaySettingsScreen extends Screen {
     private boolean isMouseOver(double mouseX, double mouseY, IOverlay overlay) {
         int x = overlay.getX();
         int y = overlay.getY();
+        int width = overlay.getWidth();
+        int height = overlay.getHeight();
 
-        return mouseX >= x && mouseX <= x + 200 &&
-               mouseY >= y && mouseY <= y + 50;
+        return mouseX >= x && mouseX <= x + width &&
+               mouseY >= y && mouseY <= y + height;
     }
 
     @Override

@@ -72,6 +72,7 @@ public class CoordinateOverlay implements IOverlay {
         MinecraftClient client = MinecraftClient.getInstance();
         TextRenderer textRenderer = client.textRenderer;
         
+        // Get actual coordinates
         String[] coords = new String[] {
             "X: " + (int)client.player.getX(),
             "Y: " + (int)client.player.getY(), 
@@ -83,12 +84,13 @@ public class CoordinateOverlay implements IOverlay {
             maxWidth = Math.max(maxWidth, textRenderer.getWidth(coord));
         }
         
-        return maxWidth + 16;
+        return maxWidth + 17;
     }
 
     @Override 
     public int getHeight() {
-        return MinecraftClient.getInstance().textRenderer.fontHeight * 3 + 5;
+        int lineHeight = MinecraftClient.getInstance().textRenderer.fontHeight + 2;
+        return (lineHeight * 3);
     }
 
     private static void renderCoordinates(DrawContext context, TextRenderer textRenderer, String[] coordinates, int posX, int posY) {
@@ -108,6 +110,7 @@ public class CoordinateOverlay implements IOverlay {
             0x80000000
         );
 
+        // Draw text
         for (int i = 0; i < coordinates.length; i++) {
             context.drawTextWithShadow(
                 textRenderer,

@@ -3,6 +3,7 @@ package org.moss.extraoverlay.client.overlay;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.font.TextRenderer;
+import java.util.List;
 
 public interface IOverlay {
     String getName();
@@ -19,4 +20,6 @@ public interface IOverlay {
     int getWidth();
     int getHeight();
 
+    List<OverlaySetting<?>> getSettings();
+    void updateSetting(String id, Object value);
 }

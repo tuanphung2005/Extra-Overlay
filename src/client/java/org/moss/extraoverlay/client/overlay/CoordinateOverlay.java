@@ -3,11 +3,23 @@ package org.moss.extraoverlay.client.overlay;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.MinecraftClient;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.moss.extraoverlay.client.overlay.OverlaySetting.SettingType;
 
 public class CoordinateOverlay implements IOverlay {
     private static int x = 5;
     private static int y = 5;
     private boolean selected = false;
+    private final List<OverlaySetting<?>> settings;
+
+    public CoordinateOverlay() {
+        settings = new ArrayList<>();
+        // Add any settings you want for coordinates
+        settings.add(new OverlaySetting<>("showBackground", "Show Background", SettingType.TOGGLE, true));
+        settings.add(new OverlaySetting<>("backgroundColor", "Background Color", SettingType.COLOR, 0x80000000));
+    }
 
     @Override
     public String getName() {
@@ -118,6 +130,23 @@ public class CoordinateOverlay implements IOverlay {
                 posY + (i * lineHeight),
                 0xFFFFFF
             );
+        }
+    }
+
+    @Override
+    public List<OverlaySetting<?>> getSettings() {
+        return settings;
+    }
+
+    @Override
+    public void updateSetting(String id, Object value) {
+        switch(id) {
+            case "showBackground":
+                // Handle background visibility
+                break;
+            case "backgroundColor":
+                // Handle background color
+                break;
         }
     }
 }

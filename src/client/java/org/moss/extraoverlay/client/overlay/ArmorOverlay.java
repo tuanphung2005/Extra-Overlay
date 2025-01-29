@@ -6,14 +6,25 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.Items;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.moss.extraoverlay.client.overlay.OverlaySetting.SettingType;
 
 public class ArmorOverlay implements IOverlay {
     private static int x = 5;
     private static int y = 80;
     private boolean selected = false;
+    private boolean showBackground = true;
+    private int backgroundColor = 0x80000000;
+    private boolean showDurability = true;
+    private final List<OverlaySetting<?>> settings;
+
+    public ArmorOverlay() {
+        settings = new ArrayList<>();
+        settings.add(new OverlaySetting<>("showBackground", "Show Background", SettingType.TOGGLE, true));
+        settings.add(new OverlaySetting<>("backgroundColor", "Background Color", SettingType.COLOR, 0x80000000));
+        settings.add(new OverlaySetting<>("showDurability", "Show Durability", SettingType.TOGGLE, true));
+    }
 
     @Override
     public boolean isSelected() {
@@ -143,6 +154,26 @@ public class ArmorOverlay implements IOverlay {
             return 0xFF55FF55;
         } catch (NumberFormatException e) {
             return 0xFFFFFFFF;
+        }
+    }
+
+    @Override
+    public List<OverlaySetting<?>> getSettings() {
+        return settings;
+    }
+
+    @Override
+    public void updateSetting(String id, Object value) {
+        switch(id) {
+            case "showBackground":
+                showBackground = (Boolean)value;
+                break;
+            case "backgroundColor":
+                backgroundColor = (Integer)value;
+                break;
+            case "showDurability":
+                showDurability = (Boolean)value;
+                break;
         }
     }
 }

@@ -8,14 +8,14 @@ import net.minecraft.client.gui.DrawContext;
 import org.moss.extraoverlay.client.overlay.IOverlay;
 import org.moss.extraoverlay.client.overlay.OverlayManager;
 
-public class OverlaySettingsScreen extends Screen {
+public class OverlayPositionScreen extends Screen {
     private final Screen parent;
     private boolean isDragging = false;
     private IOverlay draggingOverlay = null;
     private int dragOffsetX;
     private int dragOffsetY;
 
-    public OverlaySettingsScreen(Screen parent) {
+    public OverlayPositionScreen(Screen parent) {
         super(Text.literal("Edit Overlays"));
         this.parent = parent;
     }

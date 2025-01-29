@@ -7,7 +7,7 @@ import org.moss.extraoverlay.client.overlay.ArmorOverlay;
 import net.minecraft.client.MinecraftClient;
 import org.moss.extraoverlay.client.overlay.IOverlay;
 import org.moss.extraoverlay.client.overlay.OverlayManager;
-import org.moss.extraoverlay.client.screen.OverlaySettingsScreen;
+import org.moss.extraoverlay.client.screen.GlobalSettingsScreen;
 
 public class ExtraoverlayClient implements ClientModInitializer {
     @Override
@@ -20,7 +20,7 @@ public class ExtraoverlayClient implements ClientModInitializer {
         HudRenderCallback.EVENT.register((drawContext, tickDelta) -> {
             MinecraftClient client = MinecraftClient.getInstance();
 
-            if (client.currentScreen instanceof OverlaySettingsScreen) {
+            if (client.currentScreen instanceof GlobalSettingsScreen) {
                 return;
             }
 

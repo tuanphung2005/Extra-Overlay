@@ -16,9 +16,26 @@ public class CoordinateOverlay implements IOverlay {
 
     public CoordinateOverlay() {
         settings = new ArrayList<>();
-        // Add any settings you want for coordinates
+
         settings.add(new OverlaySetting<>("showBackground", "Show Background", SettingType.TOGGLE, true));
         settings.add(new OverlaySetting<>("backgroundColor", "Background Color", SettingType.COLOR, 0x80000000));
+    }
+
+    @Override
+    public List<OverlaySetting<?>> getSettings() {
+        return settings;
+    }
+
+    @Override
+    public void updateSetting(String id, Object value) {
+        switch(id) {
+            case "showBackground":
+
+                break;
+            case "backgroundColor":
+
+                break;
+        }
     }
 
     @Override
@@ -133,20 +150,4 @@ public class CoordinateOverlay implements IOverlay {
         }
     }
 
-    @Override
-    public List<OverlaySetting<?>> getSettings() {
-        return settings;
-    }
-
-    @Override
-    public void updateSetting(String id, Object value) {
-        switch(id) {
-            case "showBackground":
-                // Handle background visibility
-                break;
-            case "backgroundColor":
-                // Handle background color
-                break;
-        }
-    }
 }

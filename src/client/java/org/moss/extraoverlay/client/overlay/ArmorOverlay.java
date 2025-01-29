@@ -26,6 +26,27 @@ public class ArmorOverlay implements IOverlay {
         settings.add(new OverlaySetting<>("showDurability", "Show Durability", SettingType.TOGGLE, true));
     }
 
+    
+    @Override
+    public List<OverlaySetting<?>> getSettings() {
+        return settings;
+    }
+
+    @Override
+    public void updateSetting(String id, Object value) {
+        switch(id) {
+            case "showBackground":
+                showBackground = (Boolean)value;
+                break;
+            case "backgroundColor":
+                backgroundColor = (Integer)value;
+                break;
+            case "showDurability":
+                showDurability = (Boolean)value;
+                break;
+        }
+    }
+
     @Override
     public boolean isSelected() {
         return selected;
@@ -154,26 +175,6 @@ public class ArmorOverlay implements IOverlay {
             return 0xFF55FF55;
         } catch (NumberFormatException e) {
             return 0xFFFFFFFF;
-        }
-    }
-
-    @Override
-    public List<OverlaySetting<?>> getSettings() {
-        return settings;
-    }
-
-    @Override
-    public void updateSetting(String id, Object value) {
-        switch(id) {
-            case "showBackground":
-                showBackground = (Boolean)value;
-                break;
-            case "backgroundColor":
-                backgroundColor = (Integer)value;
-                break;
-            case "showDurability":
-                showDurability = (Boolean)value;
-                break;
         }
     }
 }
